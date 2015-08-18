@@ -57,7 +57,7 @@ In your working directory, create a `frockfile.js`:
 ```
 
 `frock-static` also supports a shorthand syntax, which is convenient for when
-you have to define a bunch of static routes:
+you have to define a bunch of static sub-routes:
 
 ```json
 {
