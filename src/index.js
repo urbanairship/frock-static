@@ -44,12 +44,15 @@ function createStaticServer (frock, logger, options = {}) {
 
 createStaticServer.validate = validate
 
-function validate ({file, url}) {
-  if (!file && !url) {
-    const msg = 'One of either `file` or `url` are required'
+function validate ({file, url, dir, routes = []}) {
+  if (routes.length && routes.some(validate)) {
+    return {routes: 'There was an error in your sub-routes'}
+  } else if (!file && !url && !dir) {
+    const msg = 'One of either `file` or `url` `dir` are required'
     return {
       file: msg,
-      url: msg
+      url: msg,
+      dir: msg
     }
   }
 }
