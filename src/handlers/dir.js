@@ -23,6 +23,8 @@ function createDirHandler (logger, {dir}) {
 
     res.setHeader('Content-Type', mime.contentType(path.extname(localPath)))
 
+    res.on('close', () => handler.end())
+
     handler.on('error', onError)
     handler.pipe(res)
 

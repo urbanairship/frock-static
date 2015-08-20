@@ -35,9 +35,7 @@ function createFileHandler (
 
     res.setHeader('Content-Type', contentTypeHeader)
 
-    res.on('close', () => {
-      handle.end()
-    })
+    res.on('close', () => handle.end())
 
     handle.on('error', onError)
     handle.pipe(res)

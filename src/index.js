@@ -22,7 +22,10 @@ function createStaticServer (frock, logger, options = {}) {
   router._fileHandler = fileHandler
   router._urlHandler = urlHandler
   router._dirHandler = dirHandler
-  router.end = () => {}
+  router.end = (ready = noop) => {
+    logger('debug', 'ending')
+    ready()
+  }
 
   return router
 
@@ -60,4 +63,8 @@ function validate ({file, url, dir, routes = []}) {
 function e404 (req, res) {
   res.statusCode = 404
   res.end('no routes matched')
+}
+
+function noop () {
+  // nope
 }
