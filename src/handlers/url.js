@@ -42,13 +42,13 @@ function createUrlHandler (
 
       remoteRes.pipe(res)
 
-      logger('info', `serving remote ${url}`)
+      logger.info(`serving remote ${url}`)
     })
 
     handle.end()
 
     function onError (err) {
-      logger('error', `error while serving remote ${url}: ${err}`, err)
+      logger.error(`error while serving remote ${url}: ${err}`, err)
       res.end(err.toString())
     }
   }

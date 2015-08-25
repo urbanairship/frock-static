@@ -11,7 +11,7 @@ function createDirHandler (logger, {dir}) {
   function dirHandler (req, res) {
     let localPath = path.join(dir, req.splats[0])
 
-    logger('info', `serving local dir ${localPath}`)
+    logger.info(`serving local dir ${localPath}`)
 
     if (!localPath) {
       onError(new Error('path was empty'))
@@ -29,7 +29,7 @@ function createDirHandler (logger, {dir}) {
     handler.pipe(res)
 
     function onError (err) {
-      logger('error', `error while serving from dir ${localPath}: ${err}`, err)
+      logger.error(`error while serving from dir ${localPath}: ${err}`, err)
 
       res.statusCode = 404
       res.end(err.toString())

@@ -40,10 +40,10 @@ function createFileHandler (
     handle.on('error', onError)
     handle.pipe(res)
 
-    logger('info', `serving local ${file}`)
+    logger.info(`serving local ${file}`)
 
     function onError (err) {
-      logger('error', `error while serving local ${file}: ${err}`, err)
+      logger.info(`error while serving local ${file}: ${err}`, err)
 
       res.statusCode = 500
       res.end(err.toString())

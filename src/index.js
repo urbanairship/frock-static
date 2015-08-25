@@ -23,7 +23,7 @@ function createStaticServer (frock, logger, options = {}) {
   router._urlHandler = urlHandler
   router._dirHandler = dirHandler
   router.end = (ready = noop) => {
-    logger('debug', 'ending')
+    logger.debug('ending')
     ready()
   }
 
