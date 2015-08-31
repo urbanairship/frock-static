@@ -1,4 +1,3 @@
-import commuter from 'commuter'
 import extend from 'xtend'
 
 import fileHandler from './handlers/file'
@@ -11,7 +10,7 @@ export default createStaticServer
 
 function createStaticServer (frock, logger, options = {}) {
   const routes = options.routes || []
-  const router = commuter(e404, options.baseUrl)
+  const router = frock.router(e404)
 
   if (routes.length) {
     routes.forEach(route => {
