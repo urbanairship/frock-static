@@ -37,6 +37,7 @@ In your working directory, create a `frockfile.js`:
           "methods": ["GET"],
           "handler": "frock-static",
           "options": {
+            "status": 201,
             "url": "http://paste.prod.urbanairship.com/raw/6255",
             "contentType": "application/json"
           }

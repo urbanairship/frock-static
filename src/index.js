@@ -9,22 +9,36 @@ import jsonHandler from './handlers/json'
 export default createStaticServer
 
 function createStaticServer (frock, logger, options = {}) {
+  const handlers = new Map([
+    ['file', fileHandler],
+    ['dir', dirHandler],
+    ['url', urlHandler],
+    ['text', textHandler],
+    ['json', jsonHandler]
+  ])
+
   const routes = options.routes || []
   const router = frock.router(e404)
 
   if (routes.length) {
     routes.forEach(route => {
-      router.any(route.path, getHandler(extend(options, route)))
+      const opts = extend(options, route)
+
+      router.any(route.path, statusHandler(opts, getHandler(opts)))
     })
   } else {
-    router.any('*', getHandler(options))
+    router.any('*', statusHandler(options, getHandler(options)))
   }
 
+  // exports for testing; TODO these should be separate modules
   router._fileHandler = fileHandler
   router._urlHandler = urlHandler
   router._dirHandler = dirHandler
   router._textHandler = textHandler
   router._jsonHandler = jsonHandler
+  router._getHandler = getHandler
+  router._statusHandler = statusHandler
+
   router.end = (ready = noop) => {
     logger.debug('ending')
     ready()
@@ -33,21 +47,34 @@ function createStaticServer (frock, logger, options = {}) {
   return router
 
   function getHandler (opts) {
-    if (opts.url) {
-      return urlHandler(logger, opts)
-    } else if (opts.dir) {
-      return dirHandler(logger, opts)
-    } else if (opts.file) {
-      return fileHandler(logger, opts)
-    } else if (opts.text) {
-      return textHandler(logger, opts)
-    } else if (opts.json) {
-      return jsonHandler(logger, opts)
-    } else {
-      throw new Error(
-        'static: No recognized handlers were present in the configuration ' +
-        'object (looked for one of `url`, `file`, `dir`, `text`, `json`)'
-      )
+    for (let key of handlers.keys()) {
+      if (opts[key]) {
+        return handlers.get(key)(logger, opts)
+      }
+    }
+
+    throw new Error(
+      'static: No recognized handlers were present in the configuration object'
+    )
+  }
+
+  function statusHandler (opts, route) {
+    let status = 200
+
+    if (opts && opts.status) {
+      status = Math.abs(Number(opts.status))
+
+      if (Number.isNaN(status)) {
+        throw new Error(`static: status "${opts.status}" is not a number`)
+      }
+    }
+
+    return _route
+
+    function _route (req, res) {
+      res.statusCode = status
+
+      route(req, res)
     }
   }
 }
