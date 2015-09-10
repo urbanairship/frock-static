@@ -1,3 +1,5 @@
+import 'core-js/shim'
+
 import extend from 'xtend'
 
 import fileHandler from './handlers/file'
