@@ -1,14 +1,18 @@
-import 'core-js/shim'
+try {
+  require('babel-polyfill')
+} catch (e) {
+  // babel polyfill throws if it's ever included in any other module
+}
 
-import extend from 'xtend'
+const extend = require('xtend')
 
-import fileHandler from './handlers/file'
-import dirHandler from './handlers/dir'
-import urlHandler from './handlers/url'
-import textHandler from './handlers/text'
-import jsonHandler from './handlers/json'
+const fileHandler = require('./handlers/file')
+const dirHandler = require('./handlers/dir')
+const urlHandler = require('./handlers/url')
+const textHandler = require('./handlers/text')
+const jsonHandler = require('./handlers/json')
 
-export default createStaticServer
+module.exports = createStaticServer
 
 function createStaticServer (frock, logger, options = {}) {
   const handlers = new Map([
@@ -32,12 +36,7 @@ function createStaticServer (frock, logger, options = {}) {
     router.any('*', statusHandler(options, getHandler(options)))
   }
 
-  // exports for testing; TODO these should be separate modules
-  router._fileHandler = fileHandler
-  router._urlHandler = urlHandler
-  router._dirHandler = dirHandler
-  router._textHandler = textHandler
-  router._jsonHandler = jsonHandler
+  // exports for testing
   router._getHandler = getHandler
   router._statusHandler = statusHandler
 

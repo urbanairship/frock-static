@@ -1,8 +1,8 @@
-import http from 'http'
-import https from 'https'
-import {parse} from 'url'
+const http = require('http')
+const https = require('https')
+const {parse} = require('url')
 
-export default createUrlHandler
+module.exports = createUrlHandler
 
 function createUrlHandler (
   logger,
@@ -42,7 +42,7 @@ function createUrlHandler (
 
       remoteRes.pipe(res)
 
-      logger.info(`serving remote ${url}`)
+      logger.debug(`serving remote ${url}`)
     })
 
     handle.end()

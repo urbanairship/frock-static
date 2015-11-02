@@ -1,4 +1,4 @@
-export default createJsonHandler
+module.exports = createJsonHandler
 
 function createJsonHandler (
   logger,
@@ -14,6 +14,8 @@ function createJsonHandler (
     Object.keys(responseHeaders).forEach(h => {
       res.setHeader(h, responseHeaders[h])
     })
+
+    logger.debug(`serving json content`)
 
     res.json(json, 200, {contentType})
   }

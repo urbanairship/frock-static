@@ -1,9 +1,9 @@
-import fs from 'fs'
-import path from 'path'
+const fs = require('fs')
+const path = require('path')
 
-import mime from 'mime-types'
+const mime = require('mime-types')
 
-export default createDirHandler
+module.exports = createDirHandler
 
 function createDirHandler (logger, {dir}) {
   return dirHandler
@@ -11,7 +11,7 @@ function createDirHandler (logger, {dir}) {
   function dirHandler (req, res) {
     let localPath = path.join(dir, req.splats[0])
 
-    logger.info(`serving local dir ${localPath}`)
+    logger.debug(`serving local dir ${localPath}`)
 
     if (!localPath) {
       onError(new Error('path was empty'))

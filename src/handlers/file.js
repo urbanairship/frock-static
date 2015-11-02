@@ -1,8 +1,8 @@
-import fs from 'fs'
+const fs = require('fs')
 
-import mime from 'mime-types'
+const mime = require('mime-types')
 
-export default createFileHandler
+module.exports = createFileHandler
 
 function createFileHandler (
   logger,
@@ -40,10 +40,10 @@ function createFileHandler (
     handle.on('error', onError)
     handle.pipe(res)
 
-    logger.info(`serving local ${file}`)
+    logger.debug(`serving local ${file}`)
 
     function onError (err) {
-      logger.info(`error while serving local ${file}: ${err}`, err)
+      logger.error(`error while serving local ${file}: ${err}`, err)
 
       res.statusCode = 500
       res.end(err.toString())

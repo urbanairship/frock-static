@@ -1,4 +1,4 @@
-export default createTextHandler
+module.exports = createTextHandler
 
 function createTextHandler (
   logger,
@@ -14,6 +14,8 @@ function createTextHandler (
     Object.keys(responseHeaders).forEach(h => {
       res.setHeader(h, responseHeaders[h])
     })
+
+    logger.debug(`serving text content`)
 
     res.setHeader('Content-Type', contentType)
     res.statusCode = 200
