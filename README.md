@@ -83,7 +83,7 @@ you have to define a bunch of static sub-routes:
               {
                 "path": "things",
                 "url": "https://raw.github.com/someone/something/file.json"
-              },
+              }
             ],
             "contentType": "application/json"
           }
