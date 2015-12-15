@@ -10,8 +10,19 @@
     "start": "npm run build -- --watch",
     "test": "npm run build && babel-node tests/index.js &&  npm run lint"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urbanairship/frock-static.git"
+  },
   "author": "Urban Airship",
+  "contributors": [
+    "Nathan Wittstock <nate.wittstock@urbanairship.com>"
+  ],
   "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/urbanairship/frock-static/issues"
+  },
+  "homepage": "https://github.com/urbanairship/frock-static#readme",
   "dependencies": {
     "babel-polyfill": "^6.0.16",
     "mime-types": "^2.1.4"

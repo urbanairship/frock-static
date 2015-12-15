@@ -3,6 +3,10 @@
 A static file server plugin for `frock`, that can source its static files from
 interesting places.
 
+[![Build Status](http://img.shields.io/travis/urbanairship/frock-static/master.svg?style=flat-square)](https://travis-ci.org/urbanairship/frock-static)
+[![npm install](http://img.shields.io/npm/dm/frock-static.svg?style=flat-square)](https://www.npmjs.org/package/frock-static)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
+
 A static file source can be:
 
 - A remote URL
