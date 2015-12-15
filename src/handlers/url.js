@@ -23,7 +23,7 @@ function createUrlHandler (
       requestUri = parse(url)
     }
 
-    if (requestUri.protocol === 'https') {
+    if (requestUri.protocol && requestUri.protocol.includes('https')) {
       request = https.request
       requestUri.rejectUnauthorized = strictSsl
     }
