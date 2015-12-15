@@ -4,8 +4,6 @@ try {
   // babel polyfill throws if it's ever included in any other module
 }
 
-const extend = require('xtend')
-
 const fileHandler = require('./handlers/file')
 const dirHandler = require('./handlers/dir')
 const urlHandler = require('./handlers/url')
@@ -28,7 +26,7 @@ function createStaticServer (frock, logger, options = {}) {
 
   if (routes.length) {
     routes.forEach(route => {
-      const opts = extend(options, route)
+      const opts = Object.assign({}, options, route)
 
       router.any(route.path, statusHandler(opts, getHandler(opts)))
     })
