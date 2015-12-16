@@ -1,3 +1,9 @@
+try {
+  require('babel-polyfill')
+} catch (e) {
+  // babel polyfill throws if it's ever included in any other module
+}
+
 // queue individual handler tests
 require('./handlers/json')
 require('./handlers/text')
