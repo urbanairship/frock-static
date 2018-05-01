@@ -108,7 +108,7 @@ test('creates multiple handlers from routed config', t => {
 
   handler(request, response)
   data = JSON.parse(response._getData())
-  delete data.routes  // delete parts we don't care about to make assertion smaller
+  delete data.routes // delete parts we don't care about to make assertion smaller
 
   t.equal(response.statusCode, 200)
   t.deepEqual(
@@ -129,7 +129,7 @@ test('creates multiple handlers from routed config', t => {
 
   handler(request, response)
   data = JSON.parse(response._getData())
-  delete data.routes  // delete parts we don't care about to make assertion smaller
+  delete data.routes // delete parts we don't care about to make assertion smaller
 
   t.equal(response.statusCode, 200)
   t.deepEqual(
@@ -150,7 +150,7 @@ test('creates multiple handlers from routed config', t => {
 
   handler(request, response)
   data = JSON.parse(response._getData())
-  delete data.routes  // delete parts we don't care about to make assertion smaller
+  delete data.routes // delete parts we don't care about to make assertion smaller
 
   t.equal(response.statusCode, 200)
   t.deepEqual(
