@@ -1,6 +1,6 @@
 {
   "name": "frock-static",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "A static file server for frock",
   "main": "lib/index.js",
   "scripts": {
