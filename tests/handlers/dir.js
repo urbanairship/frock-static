@@ -3,6 +3,7 @@
  * file at the top-level directory of this distribution and at
  * https://github.com/urbanairship/frock-static/blob/master/LICENSE
  */
+const path = require('path')
 const test = require('tape')
 const proxyquire = require('proxyquire')
 const through = require('through')
@@ -32,7 +33,7 @@ test('can serve static file from dir', t => {
   const expectedFileContents = 'contents'
   const dir = 'some/dir'
   const file = 'file.txt'
-  const expectedFileName = 'some/dir/file.txt'
+  const expectedFileName = path.resolve(dir, file)
   const request = {
     splats: [file]
   }
@@ -88,6 +89,61 @@ test('404s on filestream error', t => {
     const stream = through()
 
     process.nextTick(() => stream.emit('error', 'wups'))
+
+    return stream
+  }
+})
+
+test('403s on path traversal attempt', t => {
+  t.plan(1)
+
+  const request = {
+    splats: ['../../escape.txt']
+  }
+  const response = through(null, end)
+  const handler = lib(log, {dir: '/some/root'})
+
+  handler(request, response)
+
+  function end () {
+    t.equal(response.statusCode, 403)
+  }
+})
+
+test('allows dir configured outside cwd', t => {
+  t.plan(4)
+
+  const expectedFileContents = 'contents'
+  const dir = '../public'
+  const file = 'index.html'
+  const expectedFileName = path.resolve(dir, file)
+  const request = {
+    splats: [file]
+  }
+  const response = through(write)
+  const handler = lib(log, {dir})
+
+  response.setHeader = setHeader
+
+  fs.createReadStream = createReadStream
+
+  handler(request, response)
+
+  function write (data) {
+    t.equal(data, expectedFileContents)
+  }
+
+  function setHeader (header, content) {
+    t.equal(header.toLowerCase(), 'content-type')
+    t.equal(content, 'text/html; charset=utf-8')
+  }
+
+  function createReadStream (fileName) {
+    const stream = through()
+
+    t.equal(fileName, expectedFileName)
+
+    process.nextTick(() => stream.queue(expectedFileContents))
 
     return stream
   }
